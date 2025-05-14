@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main{
+    static ArrayList<Aluno> listaAlunos = new ArrayList<>();
     public static void main(String[] args) {
         Scanner scanner =new Scanner(System.in);
         int opcao;
@@ -70,10 +72,30 @@ public class Main{
             switch (opcao) {
                 case 1:
                     System.out.println("Cadastro de aluno iniciado...");
+                    System.out.print("Digite o nome completo do aluno: ");
+                    String nome = scanner.nextLine();
+
+                    System.out.print("Digite a matrícula do aluno: ");
+                    String matricula = scanner.nextLine();
+
+                    System.out.print("Digite o curso do aluno: ");
+                    String curso = scanner.nextLine();
+
+                    Aluno novoAluno = new Aluno (nome, matricula, curso);
+                    listaAlunos.add(novoAluno);
+
+                    System.out.println("Aluno cadastrado com sucesso!");
                     break;
         
                 case 2:
                     System.out.println("Lista de alunos:");
+                    if (listaAlunos.isEmpty()) {
+                        System.out.println("Nenhum aluno cadastrado");
+                    } else {
+                        for (Aluno aluno : listaAlunos) {
+                            System.out.println(aluno);
+                        }
+                    }
                     break;
 
                 case 3:

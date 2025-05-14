@@ -1,4 +1,4 @@
-//Classe base: Aluno
+ //Classe base: Aluno
 public class Aluno {
     private String nome;
     private String matricula;
@@ -43,10 +43,14 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return nome + "- Matrícula:" + matricula + "- Curso:" + curso + "- Trancado:" + (trancado ? "(Trancado)" : "Ativo");
+        return nome + "\n" +
+           "Matrícula: " + matricula + "\n" +
+           "Curso: " + curso + "\n" +
+           "Status: " + (trancado ? "Trancado" : "Ativo") + "\n";
+          
     }
-    
 }
+
 
 
 
