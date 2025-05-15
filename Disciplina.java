@@ -4,12 +4,14 @@ public class Disciplina {
     private String nome;
     private String codigo;
     private int cargaHoraria;
+    private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
 
-    public Disciplina(String nome, String codigo, int cargaHoraria) {
+    public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
         this.nome = nome;
         this.codigo = codigo;
         this.cargaHoraria = cargaHoraria;
+        this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = new ArrayList<>();
     }
 
@@ -34,6 +36,14 @@ public class Disciplina {
         }
     }
 
+    public boolean temVaga(){
+        return alunosMatriculados.size() < capacidadeMaxima;
+    }
+
+    public int getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
+    
     @Override
     public String toString() {
         return nome + "\n" +

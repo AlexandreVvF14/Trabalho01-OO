@@ -8,11 +8,12 @@ public class Main{
         Scanner scanner =new Scanner(System.in);
         int opcao;
 
-        listaDisciplinas.add(new Disciplina("Matemática Discreta", "MAT001", 60));
-        listaDisciplinas.add(new Disciplina("Programação Orientada a Objetos", "CIC002", 60));
-        listaDisciplinas.add(new Disciplina("Estruturas de Dados", "CIC003", 60));
-        listaDisciplinas.add(new Disciplina("Desenvolvimento de Software", "CIC004", 60));
-        listaDisciplinas.add(new Disciplina("Cálculo 2", "MAT005", 90));
+        listaDisciplinas.add(new Disciplina("Matemática Discreta", "MAT001", 60, 2));
+        listaDisciplinas.add(new Disciplina("Programação Orientada a Objetos", "CIC002", 60, 2));
+        listaDisciplinas.add(new Disciplina("Estruturas de Dados", "CIC003", 60, 2));
+        listaDisciplinas.add(new Disciplina("Desenvolvimento de Software", "CIC004", 60, 2));
+        listaDisciplinas.add(new Disciplina("Cálculo 2", "MAT005", 90, 4));
+        listaDisciplinas.add(new Disciplina("Algorítmo e Programação de Computadores", "CIC006", 60, 2));
 
         do {
             System.out.println("+___________________________+");
@@ -134,7 +135,8 @@ public class Main{
 
                     System.out.println("Disciplinas disponíveis:");
                     for (Disciplina d : listaDisciplinas) {
-                        System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ")");
+                        int vagasRestantes = d.getCapacidadeMaxima() - d.getAlunosMatriculados().size();
+                        System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ") - Vagas restantes: " + vagasRestantes);
                     }
 
                     System.out.print("Digite o código da disciplina para matrícula (ex: MAT001): ");
@@ -152,9 +154,13 @@ public class Main{
                         System.out.println("Disciplina não encontrada.");
                     } else {
                         if (!alunoEncontrado.getDisciplinasMatriculadas().contains(disciplinaEscolhida)) {
-                            alunoEncontrado.matricularEmDisciplina(disciplinaEscolhida);
-                            disciplinaEscolhida.matricularAluno(alunoEncontrado);
-                            System.out.println("Matrícula realizada com sucesso!");
+                            if (disciplinaEscolhida.temVaga()) {
+                                alunoEncontrado.matricularEmDisciplina(disciplinaEscolhida);
+                                disciplinaEscolhida.matricularAluno(alunoEncontrado);
+                                System.out.println("Matrícula realizada com sucesso!");
+                            } else {
+                                System.out.println("Não há mais vagas nesta disciplina.");
+                            }
                         } else {
                             System.out.println("Aluno já está matriculado nesta disciplina.");
                         }
