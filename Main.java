@@ -3,13 +3,20 @@ import java.util.Scanner;
 
 public class Main{
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
+    static ArrayList<Disciplina> listaDisciplinas = new ArrayList<>();
     public static void main(String[] args) {
         Scanner scanner =new Scanner(System.in);
         int opcao;
 
+        listaDisciplinas.add(new Disciplina("Matemática Discreta", "MAT001", 60));
+        listaDisciplinas.add(new Disciplina("Programação Orientada a Objetos", "CIC002", 60));
+        listaDisciplinas.add(new Disciplina("Estruturas de Dados", "CIC003", 60));
+        listaDisciplinas.add(new Disciplina("Desenvolvimento de Software", "CIC004", 60));
+        listaDisciplinas.add(new Disciplina("Cálculo 2", "MAT005", 90));
+
         do {
             System.out.println("+___________________________+");
-            System.out.println("|      SISTEMA FCTE         |");
+            System.out.println("|        SISTEMA FCTE       |");
             System.out.println("+___________________________+");
             System.out.println("| 1 - Modo Aluno            |");
             System.out.println("| 2 - Modo Disciplina/Turma |");
@@ -99,7 +106,59 @@ public class Main{
                     break;
 
                 case 3:
-                    System.out.println("Matrícula em disciplina...");
+                    if (listaAlunos.isEmpty()) {
+                        System.out.println("Nenhum aluno cadastrado ainda.");
+                        break;
+                    }
+
+                    System.out.print("Digite a matrícula do aluno que deseja matricular: ");
+                    String matriculaAluno = scanner.nextLine();
+
+                    Aluno alunoEncontrado = null;
+                    for (Aluno a : listaAlunos) {
+                        if (a.getMatricula().equalsIgnoreCase(matriculaAluno)) {
+                            alunoEncontrado = a;
+                            break;
+                        }
+                    }
+
+                    if (alunoEncontrado == null) {
+                        System.out.println("Aluno não encontrado.");
+                        break;
+                    }
+
+                    if (listaDisciplinas.isEmpty()) {
+                        System.out.println("Nenhuma disciplina disponível para matrícula.");
+                        break;
+                    }
+
+                    System.out.println("Disciplinas disponíveis:");
+                    for (Disciplina d : listaDisciplinas) {
+                        System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ")");
+                    }
+
+                    System.out.print("Digite o código da disciplina para matrícula (ex: MAT001): ");
+                    String codigoDisciplina = scanner.nextLine();
+
+                    Disciplina disciplinaEscolhida = null;
+                    for (Disciplina d : listaDisciplinas) {
+                        if (d.getCodigo().equalsIgnoreCase(codigoDisciplina)) {
+                            disciplinaEscolhida = d;
+                            break;
+                        }
+                    }
+
+                    if (disciplinaEscolhida == null) {
+                        System.out.println("Disciplina não encontrada.");
+                    } else {
+                        if (!alunoEncontrado.getDisciplinasMatriculadas().contains(disciplinaEscolhida)) {
+                            alunoEncontrado.matricularEmDisciplina(disciplinaEscolhida);
+                            disciplinaEscolhida.matricularAluno(alunoEncontrado);
+                            System.out.println("Matrícula realizada com sucesso!");
+                        } else {
+                            System.out.println("Aluno já está matriculado nesta disciplina.");
+                        }
+                    }
                     break;
 
                 case 4:

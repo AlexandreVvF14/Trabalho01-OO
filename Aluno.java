@@ -1,9 +1,14 @@
  //Classe base: Aluno
+
+import java.util.ArrayList;
+
 public class Aluno {
     private String nome;
     private String matricula;
     private String curso;
     private boolean trancado;
+    private ArrayList<Disciplina> disciplinasMatriculadas = new ArrayList<>();
+
 
     public Aluno(String nome, String matricula, String curso) {
         this.nome = nome;
@@ -40,6 +45,15 @@ public class Aluno {
     public void destrancar() {
         trancado = false;
     }
+
+    public void matricularEmDisciplina(Disciplina disciplina) {
+    disciplinasMatriculadas.add(disciplina);
+    }
+
+    public ArrayList<Disciplina> getDisciplinasMatriculadas() {
+        return disciplinasMatriculadas;
+    }
+
 
     @Override
     public String toString() {
