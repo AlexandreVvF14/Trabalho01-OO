@@ -3,17 +3,12 @@ import java.util.Scanner;
 
 public class Main{
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
-    static ArrayList<Disciplina> listaDisciplinas = new ArrayList<>();
+    static ArrayList<Disciplina> listaDisciplinas = FabricaDeDisciplina.criarDisciplinas();
+
     public static void main(String[] args) {
         Scanner scanner =new Scanner(System.in);
         int opcao;
 
-        listaDisciplinas.add(new Disciplina("Matemática Discreta", "MAT001", 60, 2));
-        listaDisciplinas.add(new Disciplina("Programação Orientada a Objetos", "CIC002", 60, 2));
-        listaDisciplinas.add(new Disciplina("Estruturas de Dados", "CIC003", 60, 2));
-        listaDisciplinas.add(new Disciplina("Desenvolvimento de Software", "CIC004", 60, 2));
-        listaDisciplinas.add(new Disciplina("Cálculo 2", "MAT005", 90, 4));
-        listaDisciplinas.add(new Disciplina("Algorítmo e Programação de Computadores", "CIC006", 60, 2));
 
         do {
             System.out.println("+___________________________+");

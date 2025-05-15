@@ -6,6 +6,7 @@ public class Disciplina {
     private int cargaHoraria;
     private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
+    private ArrayList<Disciplina> preRequisitos = new ArrayList<>();
 
     public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
         this.nome = nome;
@@ -21,6 +22,14 @@ public class Disciplina {
 
     public String getCodigo() {
         return codigo;
+    }
+
+    public void adicionarPreRequisito(Disciplina disciplina) {
+        preRequisitos.add(disciplina);
+    }
+
+    public ArrayList<Disciplina> getPreRequisitos() {
+        return preRequisitos;
     }
 
     public ArrayList<Aluno> getAlunosMatriculados() {
@@ -43,7 +52,7 @@ public class Disciplina {
     public int getCapacidadeMaxima() {
         return capacidadeMaxima;
     }
-    
+
     @Override
     public String toString() {
         return nome + "\n" +
