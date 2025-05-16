@@ -160,7 +160,7 @@ public class Main{
                             System.out.println("Aluno já está matriculado nesta disciplina.");
                         }
                     }
-                    break;
+                    break; 
 
                 case 4:
                     System.out.println("Trancamento solicitado...");
@@ -168,10 +168,12 @@ public class Main{
 
                 case 5:
                     System.out.println("Salvando dados...");
+                    Persistencia.salvarAlunos(listaAlunos, "alunos.dat");
                     break;
 
                 case 6:
                     System.out.println("Carregando dados...");
+                    listaAlunos = Persistencia.carregarAlunos("alunos.dat");
                     break;
 
                 case 0:

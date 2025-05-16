@@ -1,8 +1,9 @@
  //Classe base: Aluno
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Aluno {
+public class Aluno implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nome;
     private String matricula;
     private String curso;
