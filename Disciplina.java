@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Disciplina {
+public class Disciplina implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String nome;
     private String codigo;
     private int cargaHoraria;
