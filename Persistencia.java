@@ -20,4 +20,25 @@ public class Persistencia {
             return new ArrayList<>();
         }
     }
- }     
+
+    // Para salvar disciplinas
+    public static void salvarDisciplinas(ArrayList<Disciplina> disciplinas, String nomeArquivo) {
+    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomeArquivo))) {
+        oos.writeObject(disciplinas);
+    } catch (IOException e) {
+        System.out.println("Erro ao salvar disciplinas: " + e.getMessage());
+    }
+}
+
+
+    @SuppressWarnings("unchecked")
+
+    public static ArrayList<Disciplina> carregarDisciplinas(String nomeArquivo) {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomeArquivo))) {
+        return (ArrayList<Disciplina>) ois.readObject();
+    } catch (IOException | ClassNotFoundException e) {
+        System.out.println("Erro ao carregar disciplinas: " + e.getMessage());
+        return null;
+    }
+}
+}

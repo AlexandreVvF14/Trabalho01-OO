@@ -39,6 +39,7 @@ public class ModoAluno {
                 case 5 -> {
                     System.out.println("Salvando dados...");
                     Persistencia.salvarAlunos(listaAlunos, "alunos.dat");
+                    Persistencia.salvarDisciplinas(listaDisciplinas, "disciplinas.dat");
                 }
                 case 0 -> System.out.println("Retornando ao menu principal...");
                 default -> System.out.println("Opção inválida!");

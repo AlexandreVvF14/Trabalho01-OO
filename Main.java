@@ -1,13 +1,19 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main{
+public class Main {
     static ArrayList<Aluno> listaAlunos = new ArrayList<>();
-    static ArrayList<Disciplina> listaDisciplinas = FabricaDeDisciplina.criarDisciplinas();
+    static ArrayList<Disciplina> listaDisciplinas;
 
     public static void main(String[] args) {
-        listaAlunos = Persistencia.carregarAlunos("alunos.dat");
+        // Carregar disciplinas
+        listaDisciplinas = Persistencia.carregarDisciplinas("disciplinas.dat");
+        if (listaDisciplinas == null) {
+            listaDisciplinas = FabricaDeDisciplina.criarDisciplinas();
+        }
 
+        // Carregar alunos
+        listaAlunos = Persistencia.carregarAlunos("alunos.dat");
         if (listaAlunos == null) {
             listaAlunos = new ArrayList<>();
         }
@@ -47,6 +53,8 @@ public class Main{
 
                 case 0:
                     System.out.println("Saindo do sistema... Até a próxima jornada!");
+                    Persistencia.salvarAlunos(listaAlunos, "alunos.dat");
+                    Persistencia.salvarDisciplinas(listaDisciplinas, "disciplinas.dat");
                     break;
 
                 default:
@@ -57,5 +65,5 @@ public class Main{
 
         scanner.close();
     }
-    
-}
+    }
+
