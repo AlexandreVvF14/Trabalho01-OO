@@ -14,7 +14,7 @@ public class ModoAluno {
 
     public void exibirMenu() {
         int opcao;
-
+ 
         do {
             System.out.println("+____________________________________________+");
             System.out.println("|                 MODO ALUNO                 |");

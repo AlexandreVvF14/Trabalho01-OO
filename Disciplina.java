@@ -62,4 +62,18 @@ public class Disciplina implements Serializable{
         "Carga Horária: " + cargaHoraria + "\n" +
         "Alunos Matriculados: " + alunosMatriculados.size() + "\n";
     }
+
+    @Override
+        public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Disciplina that = (Disciplina) o;
+        return codigo.equals(that.codigo);
+}
+
+    @Override
+    public int hashCode() {
+        return codigo.hashCode();
+}
+
 }

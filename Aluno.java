@@ -48,7 +48,9 @@ public class Aluno implements Serializable {
     }
 
     public void matricularEmDisciplina(Disciplina disciplina) {
-    disciplinasMatriculadas.add(disciplina);
+        if (!disciplinasMatriculadas.contains(disciplina)) {
+            disciplinasMatriculadas.add(disciplina);
+        }
     }
 
     public ArrayList<Disciplina> getDisciplinasMatriculadas() {
