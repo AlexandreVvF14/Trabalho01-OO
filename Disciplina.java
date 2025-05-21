@@ -5,6 +5,7 @@ public class Disciplina implements Serializable{
     private static final long serialVersionUID = 1L;
     private String nome;
     private String codigo;
+    private int vagas;
     private int cargaHoraria;
     private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
@@ -13,6 +14,7 @@ public class Disciplina implements Serializable{
     public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
         this.nome = nome;
         this.codigo = codigo;
+        this.vagas = capacidadeMaxima;
         this.cargaHoraria = cargaHoraria;
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = new ArrayList<>();
@@ -40,8 +42,13 @@ public class Disciplina implements Serializable{
 
     public void matricularAluno(Aluno aluno) {
         if (!alunosMatriculados.contains(aluno)) {
-            alunosMatriculados.add(aluno);
-            System.out.println("Aluno matriculado com sucesso!");
+            if (vagas > 0) {
+                alunosMatriculados.add(aluno);
+                vagas--;
+                System.out.println("Aluno matriculado com sucesso!");
+            } else {
+                System.out.println("Não há vagas disponíveis nesta disciplina.");
+            }
         } else {
             System.out.println("Aluno já matriculado nesta disciplina.");
         }
@@ -49,6 +56,16 @@ public class Disciplina implements Serializable{
 
     public boolean temVaga(){
         return alunosMatriculados.size() < capacidadeMaxima;
+    }
+
+    public int getVagasDisponiveis() {
+        return vagas;
+    }
+
+    public void incrementarVaga() {
+        if (vagas < capacidadeMaxima) {
+            vagas++;
+        }
     }
 
     public int getCapacidadeMaxima() {
@@ -60,7 +77,8 @@ public class Disciplina implements Serializable{
         return nome + "\n" +
         "Código: " + codigo + "\n" +
         "Carga Horária: " + cargaHoraria + "\n" +
-        "Alunos Matriculados: " + alunosMatriculados.size() + "\n";
+        "Alunos Matriculados: " + alunosMatriculados.size() + "\n" +
+        "Vagas Disponíveis: " + vagas + "\n" ;
     }
 
     @Override

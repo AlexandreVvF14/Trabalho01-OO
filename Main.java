@@ -17,7 +17,7 @@ public class Main {
         if (listaAlunos == null) {
             listaAlunos = new ArrayList<>();
         }
-
+       
         Scanner scanner =new Scanner(System.in);
         int opcao;
 

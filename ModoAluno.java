@@ -33,14 +33,19 @@ public class ModoAluno {
 
             switch (opcao) {
                 case 1 -> cadastrarAluno();
+
                 case 2 -> listarAlunos();
+
                 case 3 -> matricularAluno();
-                case 4 -> System.out.println("Trancamento solicitado..."); // a implementar
+
+                case 4 -> Trancamento.menuTrancamento(listaAlunos, listaDisciplinas, scanner);
+                
                 case 5 -> {
                     System.out.println("Salvando dados...");
                     Persistencia.salvarAlunos(listaAlunos, "alunos.dat");
                     Persistencia.salvarDisciplinas(listaDisciplinas, "disciplinas.dat");
                 }
+
                 case 0 -> System.out.println("Retornando ao menu principal...");
                 default -> System.out.println("Opção inválida!");
             }
@@ -113,6 +118,11 @@ public class ModoAluno {
             return;
         }
 
+        if (alunoEncontrado.isTrancado()) {
+            System.out.println("Não é possível realizar matrícula. O aluno está com o semestre trancado.");
+            return;
+        }
+
         if (listaDisciplinas.isEmpty()) {
             System.out.println("Nenhuma disciplina disponível para matrícula.");
             return;
@@ -152,3 +162,4 @@ public class ModoAluno {
         }
     }
 }
+
