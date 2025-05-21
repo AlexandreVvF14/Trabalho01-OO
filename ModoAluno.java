@@ -54,6 +54,10 @@ public class ModoAluno {
 
     private void cadastrarAluno() {
         System.out.println("Cadastro de aluno iniciado...");
+
+        System.out.print("O aluno é especial? (S/N): ");
+        String resposta = scanner.nextLine().trim().toLowerCase();
+
         System.out.print("Digite o nome completo do aluno: ");
         String nome = scanner.nextLine();
 
@@ -70,7 +74,13 @@ public class ModoAluno {
         System.out.print("Digite o curso do aluno: ");
         String curso = scanner.nextLine();
 
-        Aluno novoAluno = new Aluno(nome, matricula, curso);
+        Aluno novoAluno;
+        if (resposta.equals("s")) {
+            novoAluno = new AlunoEspecial(nome, matricula, curso);
+        } else {
+            novoAluno = new Aluno(nome, matricula, curso);
+        }
+
         listaAlunos.add(novoAluno);
         System.out.println("Aluno cadastrado com sucesso!");
     }
@@ -110,6 +120,13 @@ public class ModoAluno {
             if (a.getMatricula().equalsIgnoreCase(matriculaAluno)) {
                 alunoEncontrado = a;
                 break;
+            }
+        }
+
+        if (alunoEncontrado instanceof AlunoEspecial) {
+            if (alunoEncontrado.getDisciplinasMatriculadas().size() >= 2) {
+                System.out.println("Aluno especial só pode se matricular em no máximo 2 disciplinas.");
+                return;
             }
         }
 
