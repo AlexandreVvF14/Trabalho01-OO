@@ -55,8 +55,16 @@ public class ModoAluno {
     private void cadastrarAluno() {
         System.out.println("Cadastro de aluno iniciado...");
 
-        System.out.print("O aluno é especial? (S/N): ");
-        String resposta = scanner.nextLine().trim().toLowerCase();
+        String resposta;
+        do {
+            System.out.print("O aluno é especial? (s/n): ");
+            resposta = scanner.nextLine().trim();
+
+            if (!resposta.equals("s") && !resposta.equals("n")) {
+                System.out.println("Entrada inválida. Digite apenas 's' para sim ou 'n' para não.");
+            }
+        } while (!resposta.equals("s") && !resposta.equals("n"));
+
 
         System.out.print("Digite o nome completo do aluno: ");
         String nome = scanner.nextLine();

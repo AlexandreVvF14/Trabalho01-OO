@@ -47,12 +47,6 @@ public class Trancamento {
                     for (Disciplina d : aluno.getDisciplinasMatriculadas()) {
                         d.getAlunosMatriculados().remove(aluno);
 
-                    for (Disciplina global : listaDisciplinas) {
-                        if (global.getCodigo().equalsIgnoreCase(d.getCodigo())) {
-                            global.incrementarVaga();
-                            break;
-                        }
-                    }
                 }
                 aluno.getDisciplinasMatriculadas().clear();
 

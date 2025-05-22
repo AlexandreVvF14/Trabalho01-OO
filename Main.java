@@ -23,14 +23,14 @@ public class Main {
 
 
         do {
-            System.out.println("+___________________________+");
-            System.out.println("|        SISTEMA FCTE       |");
-            System.out.println("+___________________________+");
-            System.out.println("| 1 - Modo Aluno            |");
-            System.out.println("| 2 - Modo Disciplina/Turma |");
-            System.out.println("| 3 - Modo Avaliação        |");
-            System.out.println("| 0 - Sair                  |");
-            System.out.println("+___________________________+");
+            System.out.println("+____________________________+");
+            System.out.println("|        SISTEMA FCTE        |");
+            System.out.println("+____________________________+");
+            System.out.println("| 1 - Modo Aluno             |");
+            System.out.println("| 2 - Modo Disciplina/Turma  |");
+            System.out.println("| 3 - Modo Avaliação         |");
+            System.out.println("| 0 - Sair                   |");
+            System.out.println("+____________________________+");
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
@@ -45,6 +45,8 @@ public class Main {
 
                 case 2:
                     System.out.println("Entrando no Modo Disciplina/Turma...");
+                    ModoDisciplinaTurma modoDisciplinaTurma = new ModoDisciplinaTurma(listaDisciplinas, scanner);
+                    modoDisciplinaTurma.exibirMenu();
                     break;
 
                 case 3:

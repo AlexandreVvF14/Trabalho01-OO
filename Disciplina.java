@@ -5,19 +5,22 @@ public class Disciplina implements Serializable{
     private static final long serialVersionUID = 1L;
     private String nome;
     private String codigo;
-    private int vagas;
     private int cargaHoraria;
     private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
-    private ArrayList<Disciplina> preRequisitos = new ArrayList<>();
+    private ArrayList<Disciplina> preRequisitos;
 
-    public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
+    public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima, ArrayList<Disciplina> preRequisitos) {
         this.nome = nome;
         this.codigo = codigo;
-        this.vagas = capacidadeMaxima;
         this.cargaHoraria = cargaHoraria;
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = new ArrayList<>();
+        this.preRequisitos = preRequisitos;
+    }
+
+        public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
+        this(nome, codigo, cargaHoraria, capacidadeMaxima, new ArrayList<>());
     }
 
     public String getNome() {
@@ -26,6 +29,10 @@ public class Disciplina implements Serializable{
 
     public String getCodigo() {
         return codigo;
+    }
+
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 
     public void adicionarPreRequisito(Disciplina disciplina) {
@@ -42,9 +49,8 @@ public class Disciplina implements Serializable{
 
     public void matricularAluno(Aluno aluno) {
         if (!alunosMatriculados.contains(aluno)) {
-            if (vagas > 0) {
+            if (temVaga()) {
                 alunosMatriculados.add(aluno);
-                vagas--;
                 System.out.println("Aluno matriculado com sucesso!");
             } else {
                 System.out.println("Não há vagas disponíveis nesta disciplina.");
@@ -59,13 +65,7 @@ public class Disciplina implements Serializable{
     }
 
     public int getVagasDisponiveis() {
-        return vagas;
-    }
-
-    public void incrementarVaga() {
-        if (vagas < capacidadeMaxima) {
-            vagas++;
-        }
+        return capacidadeMaxima - alunosMatriculados.size();
     }
 
     public int getCapacidadeMaxima() {
@@ -78,7 +78,7 @@ public class Disciplina implements Serializable{
         "Código: " + codigo + "\n" +
         "Carga Horária: " + cargaHoraria + "\n" +
         "Alunos Matriculados: " + alunosMatriculados.size() + "\n" +
-        "Vagas Disponíveis: " + vagas + "\n" ;
+        "Vagas Disponíveis: " + getVagasDisponiveis() + "\n" ;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class Disciplina implements Serializable{
 
     @Override
     public int hashCode() {
-        return codigo.hashCode();
+        return codigo != null ? codigo.hashCode() : 0;
 }
 
 }
