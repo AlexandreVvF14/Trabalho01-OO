@@ -9,6 +9,7 @@ public class Disciplina implements Serializable{
     private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
     private ArrayList<Disciplina> preRequisitos;
+    private ArrayList<Turma> turmas = new ArrayList<>();
 
     public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima, ArrayList<Disciplina> preRequisitos) {
         this.nome = nome;
@@ -33,6 +34,20 @@ public class Disciplina implements Serializable{
 
     public int getCargaHoraria() {
         return cargaHoraria;
+    }
+
+    public void adicionarTurma(Turma turma) {
+        for (Turma t : turmas) {
+            if (t.getHorario().equalsIgnoreCase(turma.getHorario())) {
+                System.out.println("Já existe uma turma com este horário para esta disciplina.");
+                return;
+            }
+        }
+        turmas.add(turma);
+    }
+    
+    public ArrayList<Turma> getTurmas() {
+        return turmas;
     }
 
     public void adicionarPreRequisito(Disciplina disciplina) {

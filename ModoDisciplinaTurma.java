@@ -5,11 +5,13 @@ import java.util.Scanner;
 public class ModoDisciplinaTurma {
     private ArrayList<Disciplina> listaDisciplinas;
     private GerenciadorDeDisciplinas gerenciadorDeDisciplinas;
+    private GerenciadorDeTurmas gerenciadorDeTurmas;
     private Scanner scanner;
 
     public ModoDisciplinaTurma(ArrayList<Disciplina> listaDisciplinas, Scanner scanner) {
         this.listaDisciplinas = listaDisciplinas;
         this.gerenciadorDeDisciplinas = new GerenciadorDeDisciplinas(listaDisciplinas);
+        this.gerenciadorDeTurmas = new GerenciadorDeTurmas();
         this.scanner = scanner;
     }
 
@@ -63,8 +65,7 @@ public class ModoDisciplinaTurma {
     }
 
     private void criarTurma() {
-        // Em breve!
-        System.out.println("[TODO] Criação de turma será implementada.");
+        gerenciadorDeTurmas.criarTurmaParaDisciplina(listaDisciplinas, scanner);    
     }
 
     private void listarTurmasEAlunos() {

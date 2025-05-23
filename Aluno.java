@@ -8,7 +8,7 @@ public class Aluno implements Serializable {
     private String matricula;
     private String curso;
     private boolean trancado;
-    private ArrayList<Disciplina> disciplinasMatriculadas = new ArrayList<>();
+    private ArrayList<Turma> turmasMatriculadas = new ArrayList<>();
 
 
     public Aluno(String nome, String matricula, String curso) {
@@ -22,6 +22,10 @@ public class Aluno implements Serializable {
     public String getNome() {
         return nome;
     }
+
+    public boolean jaEstaNaTurma(Turma turma) {
+        return turmasMatriculadas.contains(turma);
+            }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -47,15 +51,22 @@ public class Aluno implements Serializable {
         trancado = false;
     }
 
-    public void matricularEmDisciplina(Disciplina disciplina) {
-        if (!disciplinasMatriculadas.contains(disciplina)) {
-            disciplinasMatriculadas.add(disciplina);
+    public void matricularNaTurma(Turma turma) {
+        if (!turmasMatriculadas.contains(turma)) {
+            turmasMatriculadas.add(turma);
         }
     }
 
     public ArrayList<Disciplina> getDisciplinasMatriculadas() {
-        return disciplinasMatriculadas;
+    ArrayList<Disciplina> disciplinas = new ArrayList<>();
+    for (Turma t : turmasMatriculadas) {
+        if (!disciplinas.contains(t.getDisciplina())) {
+            disciplinas.add(t.getDisciplina());
+        }
     }
+    return disciplinas;
+}
+
 
 
     @Override

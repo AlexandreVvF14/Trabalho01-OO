@@ -175,7 +175,7 @@ public class ModoAluno {
         } else {
             if (!alunoEncontrado.getDisciplinasMatriculadas().contains(disciplinaEscolhida)) {
                 if (disciplinaEscolhida.temVaga()) {
-                    alunoEncontrado.matricularEmDisciplina(disciplinaEscolhida);
+                    alunoEncontrado.matricularEmTurma(turma);
                     disciplinaEscolhida.matricularAluno(alunoEncontrado);
                     System.out.println("Matrícula realizada com sucesso!");
                 } else {
