@@ -16,6 +16,7 @@ public class Aluno implements Serializable {
         this.matricula = matricula;
         this.curso = curso;
         this.trancado = false; // Vou começar como ativo por padrão
+        this.turmasMatriculadas = new ArrayList<>();
     }
 
     //Ver e mudar os dados
@@ -64,8 +65,13 @@ public class Aluno implements Serializable {
             disciplinas.add(t.getDisciplina());
         }
     }
-    return disciplinas;
-}
+        return disciplinas;
+    }
+
+    public ArrayList<Turma> getTurmasMatriculadas() {
+        return turmasMatriculadas;
+    }
+
 
 
 

@@ -104,8 +104,9 @@ public class ModoAluno {
             System.out.println(a);
             if (!a.getDisciplinasMatriculadas().isEmpty()) {
                 System.out.println("Disciplinas matriculadas: ");
-                for (Disciplina d : a.getDisciplinasMatriculadas()) {
-                    System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ")");
+                for (Turma t : a.getTurmasMatriculadas()) {
+                    Disciplina d = t.getDisciplina();
+                    System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ") - Turma" + t.getNumero());
                 }
             } else {
                 System.out.println("Disciplinas matriculadas: Nenhuma");
@@ -173,17 +174,52 @@ public class ModoAluno {
         if (disciplinaEscolhida == null) {
             System.out.println("Disciplina não encontrada.");
         } else {
-            if (!alunoEncontrado.getDisciplinasMatriculadas().contains(disciplinaEscolhida)) {
-                if (disciplinaEscolhida.temVaga()) {
-                    alunoEncontrado.matricularEmTurma(turma);
-                    disciplinaEscolhida.matricularAluno(alunoEncontrado);
-                    System.out.println("Matrícula realizada com sucesso!");
-                } else {
-                    System.out.println("Não há mais vagas nesta disciplina.");
-                }
-            } else {
+            if (alunoEncontrado.getDisciplinasMatriculadas().contains(disciplinaEscolhida)) {
                 System.out.println("Aluno já está matriculado nesta disciplina.");
+                return;
             }
+
+            ArrayList<Turma> turmas = disciplinaEscolhida.getTurmas();
+            if (turmas.isEmpty()) {
+                System.out.println("Não há turmas disponíveis para essa disciplina.");
+                return;
+            }
+
+            System.out.println("Turmas disponíveis para " + disciplinaEscolhida.getNome() + ":");
+            for (int i = 0; i < turmas.size(); i++) {
+                Turma t = turmas.get(i);
+                int vagasRestantes = t.getCapacidadeMaxima() - t.getAlunosMatriculados().size();
+                String modalidadeInfo = t.isRemota() ? "Online" : "Presencial: " + t.getSala();
+                System.out.printf("%d - Turma %d | Professor: %s | %s | Horário: %s | Vagas restantes: %d\n",
+                    i + 1, t.getNumero(), t.getProfessor(), modalidadeInfo, t.getHorario(), vagasRestantes);
+
+            }
+
+            System.out.print("Escolha o número da turma para matrícula: ");
+            int escolha = -1;
+            try {
+                escolha = Integer.parseInt(scanner.nextLine()) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+                return;
+            }
+
+            if (escolha < 0 || escolha >= turmas.size()) {
+                System.out.println("Turma inválida.");
+                return;
+            }
+
+            Turma turmaEscolhida = turmas.get(escolha);
+
+            if (!turmaEscolhida.temVaga()) {
+                System.out.println("Turma sem vagas disponíveis.");
+                return;
+            }
+
+            turmaEscolhida.matricularAluno(alunoEncontrado);
+            alunoEncontrado.matricularNaTurma(turmaEscolhida);
+            System.out.println("Matrícula realizada com sucesso!");
+
         }
     }
 }

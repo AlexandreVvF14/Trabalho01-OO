@@ -10,8 +10,9 @@ public class Turma {
     private String horario;
     private int capacidadeMaxima;
     private ArrayList<Aluno> alunosMatriculados;
+    private int numero;
     
-     public Turma(Disciplina disciplina, String professor, String semestre, String formaAvaliacao, boolean presencial, String sala, String horario, int capacidadeMaxima) {
+     public Turma(int numero, Disciplina disciplina, String professor, String semestre, String formaAvaliacao, boolean presencial, String sala, String horario, int capacidadeMaxima) {
         this.disciplina = disciplina;
         this.professor = professor;
         this.semestre = semestre;
@@ -20,6 +21,7 @@ public class Turma {
         this.sala = presencial ? sala : null;
         this.horario = horario;
         this.capacidadeMaxima = capacidadeMaxima;
+        this.numero = numero;
         this.alunosMatriculados = new ArrayList<>();
     }
 
@@ -28,9 +30,26 @@ public class Turma {
         return horario;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
     public Disciplina getDisciplina() {
         return disciplina;
     }
+
+    public boolean isRemota() {
+        return !presencial;
+    }
+
+    public String getSala() {
+        return sala;
+    }
+
 
     public int getCapacidadeMaxima() {
         return capacidadeMaxima;

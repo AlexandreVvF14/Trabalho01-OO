@@ -101,7 +101,8 @@ public void criarTurmaParaDisciplina(ArrayList<Disciplina> listaDisciplinas, Sca
         }
     }
 
-    Turma novaTurma = new Turma(disciplinaEscolhida, professor, semestre, formaAvaliacao, presencial, sala, horario, capacidade);
+    int numero = disciplinaEscolhida.getTurmas().size() + 1;
+    Turma novaTurma = new Turma(numero, disciplinaEscolhida, professor, semestre, formaAvaliacao, presencial, sala, horario, capacidade);
     disciplinaEscolhida.adicionarTurma(novaTurma);
 
     System.out.println("Turma criada com sucesso!");
