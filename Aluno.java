@@ -72,6 +72,29 @@ public class Aluno implements Serializable {
         return turmasMatriculadas;
     }
 
+    public String getCurso() {
+        return curso;
+    }
+
+    public String getStatusCurso() {
+        return trancado ? "Trancado" : "Ativo";
+    }
+
+    //Temporário
+    private ArrayList<String> disciplinasAprovadas = new ArrayList<>();
+
+    public ArrayList<String> getDisciplinasAprovadas() {
+        return disciplinasAprovadas;
+    }
+
+    public void adicionarDisciplinaAprovada(String codigoDisciplina) {
+        if (!disciplinasAprovadas.contains(codigoDisciplina)) {
+            disciplinasAprovadas.add(codigoDisciplina);
+        }
+    }
+
+
+
 
 
 

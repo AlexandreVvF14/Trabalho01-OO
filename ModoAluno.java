@@ -156,9 +156,10 @@ public class ModoAluno {
 
         System.out.println("Disciplinas disponíveis:");
         for (Disciplina d : listaDisciplinas) {
-            int vagasRestantes = d.getCapacidadeMaxima() - d.getAlunosMatriculados().size();
-            System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ") - Vagas restantes: " + vagasRestantes);
+            int totalTurmas = d.getTurmas().size();
+            System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ") - Turmas disponíveis: " + totalTurmas);
         }
+
 
         System.out.print("Digite o código da disciplina para matrícula (ex: MAT001): ");
         String codigoDisciplina = scanner.nextLine();

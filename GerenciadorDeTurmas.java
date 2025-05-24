@@ -76,9 +76,10 @@ public void criarTurmaParaDisciplina(ArrayList<Disciplina> listaDisciplinas, Sca
 
     String horario;
     while (true) {
-        System.out.print("Horário (ex: Segunda 10h-12h): ");
+        System.out.print("Horário (ex: Segunda 10h-12h. Não utilizar 'Ç'): ");
         horario = scanner.nextLine();
-        if (horario.matches("(?i)^(segunda|terça|quarta|quinta|sexta|sábado|domingo) .*")) break;
+        horario = horario.replace("ç", "c").replace("Ç", "C");
+        if (horario.matches("(?i)^(segunda|terca|quarta|quinta|sexta|sábado|domingo) .*")) break;
         System.out.println("Formato inválido. Comece com o dia da semana (ex: 'Segunda 10h-12h' ou 'Segunda e Quarta 10h-12h').");
     }
 
