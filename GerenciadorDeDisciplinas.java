@@ -19,6 +19,11 @@ public class GerenciadorDeDisciplinas {
         System.out.print("Código da disciplina: ");
         String codigo = scanner.nextLine();
 
+            if (buscarDisciplinaPorCodigo(codigo) !=null) {
+                System.out.println("Já existe uma disciplina cadastrada com o código \"" + codigo + "\".");
+                return;
+            }
+
         System.out.print("Carga horária (em horas): ");
         int cargaHoraria = Integer.parseInt(scanner.nextLine());
 

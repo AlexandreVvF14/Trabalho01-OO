@@ -1,6 +1,7 @@
  //Classe base: Aluno
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Aluno implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -8,6 +9,7 @@ public class Aluno implements Serializable {
     private String matricula;
     private String curso;
     private boolean trancado;
+    private List<HistoricoEscolar> historico = new ArrayList<>();
     private ArrayList<Turma> turmasMatriculadas = new ArrayList<>();
 
 
@@ -16,6 +18,7 @@ public class Aluno implements Serializable {
         this.matricula = matricula;
         this.curso = curso;
         this.trancado = false; // Vou começar como ativo por padrão
+        this.historico = new ArrayList<>();
         this.turmasMatriculadas = new ArrayList<>();
     }
 
@@ -52,6 +55,14 @@ public class Aluno implements Serializable {
         trancado = false;
     }
 
+    public void trancarSemestre() {
+        for (Turma turma : new ArrayList<>(turmasMatriculadas)) {
+            turma.removerAluno(this);
+     }
+    turmasMatriculadas.clear();
+    trancado = true;
+    }   
+
     public void matricularNaTurma(Turma turma) {
         if (!turmasMatriculadas.contains(turma)) {
             turmasMatriculadas.add(turma);
@@ -69,6 +80,15 @@ public class Aluno implements Serializable {
     }
 
     public ArrayList<Turma> getTurmasMatriculadas() {
+        for (Turma turma : turmasMatriculadas) {
+        System.out.printf("- %s (%s) | Professor: %s | Sala: %s | Horário: %s\n",
+        turma.getDisciplina().getNome(),
+        turma.getDisciplina().getCodigo(),
+        turma.getProfessor(),
+        turma.getSala(),
+        turma.getHorario());
+}
+
         return turmasMatriculadas;
     }
 
@@ -93,9 +113,25 @@ public class Aluno implements Serializable {
         }
     }
 
+    public void adicionarAoHistorico(HistoricoEscolar registro) {
+    this.historico.add(registro);
+    }
 
+    public List<HistoricoEscolar> getHistorico() {
+        return historico;
+    }
 
-
+    public void exibirHistorico() {
+        if (historico.isEmpty()) {
+            System.out.println("Nenhuma disciplina registrada no histórico.");
+        } else {
+            System.out.println("Histórico do Curso:");
+            for (HistoricoEscolar h : historico) {
+                System.out.println(h);
+                System.out.println("-----------------------------");
+            }
+        }
+    }
 
 
     @Override

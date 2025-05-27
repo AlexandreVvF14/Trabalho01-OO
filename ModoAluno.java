@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ModoAluno {
@@ -10,6 +11,7 @@ public class ModoAluno {
         this.listaAlunos = listaAlunos;
         this.listaDisciplinas = listaDisciplinas;
         this.scanner = new Scanner(System.in);
+
     }
 
     public void exibirMenu() {
@@ -23,7 +25,8 @@ public class ModoAluno {
             System.out.println("| 2 - Listar Alunos                          |");
             System.out.println("| 3 - Matricular Aluno em Disciplina         |");
             System.out.println("| 4 - Trancar disciplina ou semestre         |");
-            System.out.println("| 5 - Salvar dados dos alunos                |");
+            System.out.println("| 5 - Adicionar Histórico                    |");
+            System.out.println("| 6 - Salvar dados dos alunos                |");
             System.out.println("| 0 - Voltar                                 |");
             System.out.println("+____________________________________________+");
             System.out.print("Escolha uma opção: ");
@@ -34,17 +37,18 @@ public class ModoAluno {
             switch (opcao) {
                 case 1 -> cadastrarAluno();
 
-                case 2 -> listarAlunos();
+                case 2 -> listarAlunos(listaAlunos);
 
                 case 3 -> matricularAluno();
 
                 case 4 -> Trancamento.menuTrancamento(listaAlunos, listaDisciplinas, scanner);
                 
-                case 5 -> {
-                    System.out.println("Salvando dados...");
+                case 5 -> 
+                    adicionarHistorico();
+
+                case 6 -> {System.out.println("Salvando dados...");
                     Persistencia.salvarAlunos(listaAlunos, "alunos.dat");
-                    Persistencia.salvarDisciplinas(listaDisciplinas, "disciplinas.dat");
-                }
+                    Persistencia.salvarDisciplinas(listaDisciplinas, "disciplinas.dat");}
 
                 case 0 -> System.out.println("Retornando ao menu principal...");
                 default -> System.out.println("Opção inválida!");
@@ -93,27 +97,180 @@ public class ModoAluno {
         System.out.println("Aluno cadastrado com sucesso!");
     }
 
-    private void listarAlunos() {
-        if (listaAlunos.isEmpty()) {
-            System.out.println("Nenhum aluno cadastrado");
+    public static void listarAlunos(List<Aluno> alunos) {
+        if (alunos.isEmpty()) {
+            System.out.println("Nenhum aluno cadastrado.");
             return;
         }
 
-        System.out.println("Lista de alunos:");
-        for (Aluno a : listaAlunos) {
-            System.out.println(a);
-            if (!a.getDisciplinasMatriculadas().isEmpty()) {
-                System.out.println("Disciplinas matriculadas: ");
-                for (Turma t : a.getTurmasMatriculadas()) {
-                    Disciplina d = t.getDisciplina();
-                    System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ") - Turma" + t.getNumero());
-                }
-            } else {
-                System.out.println("Disciplinas matriculadas: Nenhuma");
-            }
-            System.out.println();
+        System.out.println("Lista de Alunos:");
+        for (Aluno aluno : alunos) {
+            System.out.println(aluno);
+            System.out.println("----------------------------");
         }
-    }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Deseja ver mais informações sobre algum aluno? (s/n): ");
+        String resposta = scanner.nextLine();
+
+        if (resposta.equalsIgnoreCase("s")) {
+            System.out.print("Digite a matrícula do aluno: ");
+            String matricula = scanner.nextLine();
+
+            Aluno encontrado = null;
+            for (Aluno aluno : alunos) {
+                if (aluno.getMatricula().equalsIgnoreCase(matricula)) {
+                    encontrado = aluno;
+                    break;
+                }
+            }
+
+            System.out.println("Informações detalhadas:");
+            System.out.println(encontrado);
+
+            // Mostrar disciplinas em andamento
+            System.out.println("\nDisciplinas em andamento:");
+            if (encontrado.getDisciplinasMatriculadas().isEmpty()) {
+                System.out.println("Nenhuma disciplina em andamento no momento.");
+            } else {
+                for (Turma turma : encontrado.getTurmasMatriculadas()) {
+                    System.out.printf("- %s (%s) | Turma %d | Professor: %s | Horário: %s\n",
+                        turma.getDisciplina().getNome(),
+                        turma.getDisciplina().getCodigo(),
+                        turma.getNumero(),
+                        turma.getProfessor(),
+                        turma.getHorario()
+                    );
+                }
+            }
+
+            // Mostrar histórico finalizado
+            
+            encontrado.exibirHistorico();
+
+            } else {
+                System.out.println("Aluno não encontrado com essa matrícula.");
+            }
+        }
+    
+
+
+    private void adicionarHistorico() {
+        System.out.print("Digite a matrícula do aluno: ");
+        String matricula = scanner.nextLine();
+        Aluno aluno = null;
+        
+        for (Aluno a : listaAlunos) {
+            if (a.getMatricula().equalsIgnoreCase(matricula)) {
+                aluno = a;
+                break;
+            }
+        }
+
+        if (aluno == null) {
+            System.out.println("Aluno não encontrado.");
+            return;
+        }
+
+        if (listaDisciplinas.isEmpty()) {
+            System.out.println("Nenhuma disciplina cadastrada.");
+            return;
+        }
+
+        // Exibir disciplinas disponíveis
+        System.out.println("Disciplinas disponíveis:");
+        for (Disciplina d : listaDisciplinas) {
+            System.out.println("- " + d.getNome() + " (" + d.getCodigo() + ")");
+        }
+
+        System.out.print("Digite o código da disciplina: ");
+        String codigo = scanner.nextLine();
+
+        Disciplina disciplina = null;
+        for (Disciplina d : listaDisciplinas) {
+            if (d.getCodigo().equalsIgnoreCase(codigo)) {
+                disciplina = d;
+                break;
+            }
+        }
+
+        if (disciplina == null) {
+            System.out.println("Disciplina não encontrada.");
+            return;
+        }
+
+        System.out.print("Número da turma: ");
+        int turma;
+        try {
+            turma = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Número de turma inválido.");
+            return;
+        }
+
+        System.out.print("Semestre (ex: 2024.1): ");
+        String semestre = scanner.nextLine();
+
+        System.out.print("Nota final (0 a 10): ");
+        double nota;
+        try {
+            nota = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Nota inválida.");
+            return;
+        }
+
+        System.out.print("Frequência (em percentual, ex: 87.5): ");
+        double frequencia;
+        try {
+            frequencia = Double.parseDouble(scanner.nextLine()) / 100.0;
+        } catch (NumberFormatException e) {
+            System.out.println("Frequência inválida.");
+            return;
+        }
+
+        // Avaliação por conceito
+        String conceito;
+        if (nota == 0) {
+            conceito = "SR";
+        } else if (nota >= 9.0) {
+            conceito = "SS";
+        } else if (nota >= 7.0) {
+            conceito = "MS";
+        } else if (nota >= 5.0) {
+            conceito = "MM";
+        } else if (nota >= 3.0) {
+            conceito = "MI";
+        } else if (nota >= 1.0) {
+            conceito = "II";
+        } else {
+            conceito = "SR";
+        }
+
+        String statusFinal;
+        if (frequencia < 0.75) {
+            statusFinal = "Reprovado por falta";
+        } else if (conceito.equals("MI") || conceito.equals("II") || conceito.equals("SR")) {
+            statusFinal = "Reprovado por conceito: " + conceito;
+        } else {
+            statusFinal = "Aprovado com conceito: " + conceito;
+        }
+
+        HistoricoEscolar registro = new HistoricoEscolar(
+            disciplina.getCodigo(),
+            disciplina.getNome(),
+            turma,
+            semestre,
+            nota,
+            frequencia,
+            statusFinal
+        );
+
+        aluno.adicionarAoHistorico(registro);
+
+        System.out.println("Registro adicionado ao histórico com sucesso!");
+}
+
 
     private void matricularAluno() {
         if (listaAlunos.isEmpty()) {

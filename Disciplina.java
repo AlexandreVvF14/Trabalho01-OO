@@ -11,6 +11,7 @@ public class Disciplina implements Serializable{
     private ArrayList<Disciplina> preRequisitos;
     private ArrayList<Turma> turmas = new ArrayList<>();
 
+
     public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima, ArrayList<Disciplina> preRequisitos) {
         this.nome = nome;
         this.codigo = codigo;
@@ -18,6 +19,7 @@ public class Disciplina implements Serializable{
         this.capacidadeMaxima = capacidadeMaxima;
         this.alunosMatriculados = new ArrayList<>();
         this.preRequisitos = preRequisitos;
+
     }
 
         public Disciplina(String nome, String codigo, int cargaHoraria, int capacidadeMaxima) {
@@ -108,5 +110,4 @@ public class Disciplina implements Serializable{
     public int hashCode() {
         return codigo != null ? codigo.hashCode() : 0;
 }
-
 }

@@ -13,6 +13,8 @@ public class ModoDisciplinaTurma {
         this.gerenciadorDeDisciplinas = new GerenciadorDeDisciplinas(listaDisciplinas);
         this.gerenciadorDeTurmas = new GerenciadorDeTurmas();
         this.scanner = scanner;
+        carregarDisciplinas();
+        
     }
 
     public void exibirMenu() {
@@ -26,7 +28,6 @@ public class ModoDisciplinaTurma {
             System.out.println("| 2. Criar turma para uma disciplina        |");
             System.out.println("| 3. Listar turmas e alunos                 |");
             System.out.println("| 4. Salvar dados de disciplinas            |");
-            System.out.println("| 5. Carregar dados de disciplinas          |");
             System.out.println("| 0. Voltar ao menu principal               |");
             System.out.println("+___________________________________________+");
             System.out.print("Escolha uma opção: ");
@@ -46,9 +47,6 @@ public class ModoDisciplinaTurma {
                     break;
                 case 4:
                     salvarDisciplinas();
-                    break;
-                case 5:
-                    carregarDisciplinas();
                     break;
                 case 0:
                     System.out.println("Retornando ao menu principal...");

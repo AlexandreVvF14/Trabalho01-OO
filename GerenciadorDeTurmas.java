@@ -2,6 +2,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GerenciadorDeTurmas {
+    private ArrayList<Disciplina> listaDisciplinas = new ArrayList<>();
+
+public Turma buscarTurma(String codigoDisciplina, int numeroTurma) {
+    for (Disciplina d : listaDisciplinas) {
+        if (d.getCodigo().equalsIgnoreCase(codigoDisciplina)) {
+            for (Turma t : d.getTurmas()) {
+                if (t.getNumero() == numeroTurma) {
+                    return t;
+                }
+            }
+        }
+    }
+    return null;
+}
+
 
 public void criarTurmaParaDisciplina(ArrayList<Disciplina> listaDisciplinas, Scanner scanner) {
     if (listaDisciplinas.isEmpty()) {
@@ -41,12 +56,17 @@ public void criarTurmaParaDisciplina(ArrayList<Disciplina> listaDisciplinas, Sca
         System.out.println("Formato inválido. Use o formato YYYY.1 ou YYYY.2");
     }
 
-    String formaAvaliacao;
+    int formaAvaliacao;
     while (true) {
-        System.out.print("Forma de avaliação: ");
-        formaAvaliacao = scanner.nextLine();
-        if (!formaAvaliacao.trim().isEmpty()) break;
-        System.out.println("Forma de avaliação não pode ser vazia.");
+        System.out.print("Existem duas formas de avaliação:\n1 - (P1 + P2 + P3 + L + S) / 5\n2 - (P1 + P2 * 2 + P3 * 3 + L + S) / 8\r\n" + 
+"\nEscolha a forma de avaliação (1 ou 2): ");
+        try {
+            formaAvaliacao = Integer.parseInt(scanner.nextLine());
+            if (formaAvaliacao == 1 || formaAvaliacao == 2) break;
+            System.out.println("Forma de avaliação deve ser 1 ou 2.");
+        } catch (NumberFormatException e) {
+            System.out.println("Digite um número válido (1 ou 2).");
+        }
     }
 
     boolean presencial;

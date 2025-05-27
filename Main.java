@@ -12,6 +12,7 @@ public class Main {
             listaDisciplinas = FabricaDeDisciplina.criarDisciplinas();
         }
 
+
         // Carregar alunos
         listaAlunos = Persistencia.carregarAlunos("alunos.dat");
         if (listaAlunos == null) {
@@ -19,7 +20,7 @@ public class Main {
         }
        
         Scanner scanner =new Scanner(System.in);
-        int opcao;
+        int opcao = -1;
 
 
         do {
@@ -33,8 +34,12 @@ public class Main {
             System.out.println("+____________________________+");
             System.out.print("Escolha uma opção: ");
 
-            opcao = scanner.nextInt();
-            scanner.nextLine(); 
+            try {
+                opcao = Integer.parseInt(scanner.nextLine()); 
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite um número.");
+                continue;
+            }
 
             switch (opcao) {
                 case 1:
@@ -50,7 +55,9 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("Entrando no Modo Avaliação/Frequência...");
+                    GerenciadorDeTurmas gerenciadorDeTurmas = new GerenciadorDeTurmas();
+                    ModoAvaliacao modoAvaliacao = new ModoAvaliacao(scanner, gerenciadorDeTurmas);
+                    modoAvaliacao.exibirMenu();
                     break;
 
                 case 0:
@@ -62,8 +69,10 @@ public class Main {
                 default:
                     System.out.println("Opção inválida! Escolha uma opção válida.");
             }
-
-        } while (opcao != 0);
+        
+        } while (opcao != 0); {
+                opcao = scanner.nextInt();
+        }
 
         scanner.close();
     }

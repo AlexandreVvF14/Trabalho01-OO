@@ -39,19 +39,8 @@ public class Trancamento {
         switch (escolha) {
 
             case "1":
-                if (aluno.isTrancado()) {
-                    System.out.println("Aluno já está com o semestre trancado.");
-                } else {
-                    aluno.trancar();
-
-                    for (Disciplina d : aluno.getDisciplinasMatriculadas()) {
-                        d.getAlunosMatriculados().remove(aluno);
-
-                }
-                aluno.getDisciplinasMatriculadas().clear();
-
+                aluno.trancarSemestre();
                 System.out.println("Semestre trancado com sucesso!");
-                }
                 break;
 
 
